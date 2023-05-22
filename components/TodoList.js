@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { styled } from "styled-components";
 import TodoItem from "./TodoItem";
+import Sortable from "sortablejs";
 
 //Todo 리스트 영역 스타일
-const TodoListContainer = styled.div`
+const TodoListContainer = styled.ul`
   flex-direction: column;
+  padding: 0 20px;
+  margin: 20px 0;
   overflow: auto;
   display: flex;
   height: 100%;
-  margin: 20px;
 `;
 
 export function TodoList() {
     const [todos, setTodos] = useState();
+    const ulRef = useRef(null);
     const dels = useState()
+
 
     //useEffect는 랜더링될때마다 매번 실행됨
     useEffect(() => {
@@ -39,8 +43,15 @@ export function TodoList() {
       })();
     }, [dels]); //[]안의 벨류를 통해 최신 랜더링 요청 추후 기능 수정
 
+    //DOM 요소에 접근하여 TodoListContainer를 연결한다. 이 요소는 ul로 Sortable 사용에 사용할 수 있다.
+    useEffect(() => {
+      if (ulRef.current) {
+        new Sortable(ulRef.current);
+      }
+    }, []);
+
   return (
-    <TodoListContainer>
+    <TodoListContainer className="todo_list" ref={ulRef}>
       {todos && todos.map((todo) => (
         <TodoItem
           id={todo.id}

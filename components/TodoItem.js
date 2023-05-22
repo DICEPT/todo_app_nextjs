@@ -74,7 +74,7 @@ const EditIcon = styled.div`
 `;
 
 //Todo 아이템 영역 호버 스타일
-const TodoItemContainer = styled.div`
+const TodoItemContainer = styled.li`
   border-radius: 50px;
   position: relative;
   transition: 0.4s;
